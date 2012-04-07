@@ -1,0 +1,60 @@
+%% document class file for the preparation of a paper
+%% for the International Conference ICCAS 2007
+%% global option 'fleqn' ensures equations flush left.
+%% set '10pt' and 'twocolumn' options.
+
+\documentclass[fleqn,10pt,twocolumn]{ICCAS2012}
+
+%%%%%%% set heading and page number heare %%%%%%%%%%
+%\setcounter{page}{101}
+\begin{document}
+
+\title{High Degree of Freedom Humanoid Robot Error Mitigation}
+
+\author{Kevin Lynch${}^{1}$, Daniel M. Lofaro${}^{2}$, and Paul Oh${}^{3}$ }
+
+\affils{  	${}^{1}$Department of Computer Science, \\
+		${}^{2}$Department of Electrical and Computer Engineering, \\
+		${}^{3}$Department of Mechanical Engineering,\\
+Drexel University, Philadlephia, PA, USA\\
+EMAIL: kml43@drexel.edu, dml46@drexel.edu, paul@coe.drexel.edu\\
+        }
+%\thanks{ \noindent
+%   This paper is supported by my funding agencies.
+%  }
+\abstract{
+\input{abstract.tex}
+}
+
+\keywords{
+    High Degree of Freedom Humanoid Robot Error Mitigation
+}
+
+\maketitle
+
+%-----------------------------------------------------------------------
+\input{intorduction.tex}
+
+
+
+
+%%%%%%%%%%%%%%%%% BIBLIOGRAPHY IN THE LaTeX file !!!!! %%%%%%%%%%%%%%%%%%%%%%
+%%---------------------------------------------------------------------------%%
+%
+%\begin{thebibliography}{99}
+
+
+%\bibliographystyle{plain}
+%\bibliography{mit}
+
+\bibliographystyle{IEEEtran}
+%\bibliographystyle{plain}
+\bibliography{mit}{}
+
+
+%\end{thebibliography}
+
+%
+%%--------------------------------------------------------------------%%
+
+\end{document}
