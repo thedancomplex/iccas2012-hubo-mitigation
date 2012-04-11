@@ -8,3 +8,11 @@ The robot that will be used is the adult-size humanoid robot Jaemi Hubo, see Fig
   \caption{Jaemi Hubo: 130cm tall 45kg (with battery and protective shell) 40 degree of freedom, high gain position controlled adult-size humanoid robot }
   \label{fig:huboSch}
 \end{figure}
+
+Real time constraints. Difficult to simulate faults with robot.
+
+Collect data from all metrics, and construct convex hull for normal state. If metric is not useful, it will not affect hull (metric is independent of other metrics).
+
+Faults include over torque of actuators, loss of zero-moment-point, over-current disable
+
+Mitigations include: restart actuator, reduce current (disable noncritical actuator?), rebalance (shift position in various ways, move body, make sure feet are on ground, etc.)
