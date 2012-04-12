@@ -1,25 +1,33 @@
 \section{Introduction}
 
-April 27th, 2010 - Philadelphia Convention Center (Main Hall):  The robot handlers Daniel M. Lofaro and Robert Ellenberg were preparing Jaemi Hubo (the adult-size humanoid robot) for a demonstration for the \textit{Arts and Science Council} of Philadelphia.  During the dress rehearsal one of Jaemi's actuators failed during a demonstration of active balancing and she fell off of a 4 foot high stage.  The results of the impact can be found in Fig.~\ref{fig:fall} and on YouTube\footnote{Jaemi Hubo Fall: http://www.youtube.com/watch?v=DF8zAM4FLB4\label{link:fall}}.  This annual event was a high profile fund raiser for the arts and science programs throughout the greater Philadelphia area.  This event was covered widely in the print, radio, and television.  If this failure would have occurred during the actual event the aftermath would have been even more devastating.  In order for outreach like this event to continue methods to detecting a failure state and using proper mitigation to move to a proper running state must be implemented before proceeding further.
+\textit{April 27th, 2010 - Philadelphia Convention Center (Main Hall):}  The robot handlers Daniel M. Lofaro 
+and Robert Ellenberg were preparing Jaemi Hubo\footnote{Jaemi Hubo Home Page: http://dasl.mem.drexel.edu/HUBO} (the adult-size humanoid robot) for an outreach demonstration for the 
+\textit{Arts and Science Council} of Philadelphia.  During the dress rehearsal one of Jaemi's actuators failed 
+during a demonstration of active balancing and she fell off of a 4 foot high stage.  The results of the impact 
+can be found in Fig.~\ref{fig:fall} and on YouTube\footnote{Jaemi Hubo Fall: http://www.youtube.com/watch?v=DF8zAM4FLB4\label{link:fall}}.  
+This annual event was a high profile fund raiser for the arts and science programs throughout the greater Philadelphia area.  This event was covered widely in the print, radio, and television.  If this failure would have occurred during the actual event the 
+aftermath would have been even more devastating.  In order for outreach like this event to continue methods 
+for detecting failure states and choosing an appropriate mitigation must be created before proceeding further.
 
-We can never say that no parts will fail however we can know when they do and not have the entire system fail because of one part (reword).
+Inherently all electro-mechanical systems have a mean-time to failure.  Even with good maintenance systems can fail without warning.  This work proposes ways to \textit{detect} when entering a failure state and ways of \textit{mitigating} such failures.  The adult-size humanoid robots Hubo2+ and Jaemi Hubo (KHR-4) are the primary test platform for this proposed work.  All methods used are written in a broad scope so it can be applicable to other electro-mechanical systems.
 
-This work proposes ways to \textbf{detect} when entering a failure state and ways of \textbf{mitigating} such failures.  The adult-size humanoid robot Jaemi Hubo is the primary test platform for this proposed work.  All methods used are written in a broad scope so it can be applicable to other electro mechanical systems.
-
-
-
-%On April 27th, 2010: Jaemi Hubo was schedule to be apart of the \textit{Arts and Science Council} annual awards ceremony at the Philadelphia Convention Center.  During the dress rehearsal one of Jaemi's actuators failed ans she fell off of a 1.2 meter stage.
-
-Electro-mechanical systems inevitably fail during use.  Failures during operation typically cause system halts.  This is particularly hazardous to robots that require feedback to balance such as biped humanoid robots.  For biped humanoids these errors typically include, but are not limited to, actuator failure due to over torque or loss of zero-moment-point (ZMP) \cite{zmp35} causing a robot fall or collapse.  This is exceptionally harmful to adult size humanoid robots due to their weight.  It is key for the robot to recognize when it is entering a failure state and be able move to a safe running state.  This paper focuses on way of automatically detecting when a failure is about to occur and choosing the proper mitigation technique.
-
-\begin{figure}[thpb]
+\begin{figure*}[t]
   \centering
 \includegraphics[width=1.0\columnwidth]{./pix/jaemiFall.png}
   \caption{Aftermath of the 4 foot fall Jaemi Hubo took after one of her actuators failed during operation.  A video with more images of the aftermath of the failure and further explanation of the event can be seen on YouTube.}%$^\ref{link:fall}$}
   \label{fig:fall}
-\end{figure}  
- 
+\end{figure*}  
 
-Current methods of mitigation of ZMP loss for biped humanoids been investigated by Kiyoshi Fujiwara et al. \cite{4115653}.  These methods involve finding an optimal falling trajectory that reduces the instantaneous force of the robot at impact by creating multiple impact stages\cite{4399327}.  This method was fully tested on an HRP-2FX (HRP-2P surrogate) and partially on an HRP-2P.  This work did not include a method of determining a falling state, it is assumed that a fall is in progress.  Additional work on detecting a fall and reducing fall damage has been shown by Kunihiro Ogata et al.\cite{4755950}.  An active shock-reducing motion reduces the impact damage by following the center of gravity (COG) and attempting to keep it close to the ZMP support polygon.  The falling state is determined when the predicted ZMP departs from the support polygon. This method was tested on a miniature humanoid robot.  Additional work on determining a fall state using machine learning techniques\cite{4813885}.  Reimund Renner et al. used parameter estimation of multiple sensors to detect a falling state\cite{4058847}.
+Faults are difficult to detect before an executing system reaches a point of failure, as the first symptom of a fault is often system failure itself. While it is unrealistic to expect complex systems to be fault-free, actions such as resetting the system, quarantining specific components, or minimizing damage from the fault can be taken. Autonomic systems, an extension of fault tolerant systems, attempt to detect, diagnose, and mitigate faults quickly. These systems are inspired by the autonomic nervous system in the human body that monitors and regulates vital  functions of the body such as heart rate, respiration rate, and digestion. Similarly, an autonomic computer system is able to monitor itself and its environment and automatically adapt to complex changes. The goal of autonomic computing is to specify the desired state of a system using high-level objectives without detailing how to arrive at the state \cite{1160055,4061119,1301340}. By making intelligent decisions, autonomic systems free system administrators from low-level management and the intricacies of complex systems. Autonomic systems aim to be self-configuring, self-optimizing, self-healing, and self-protecting. These properties, collectively referred to as the self-* properties, are different views of the same self-man\-age\-ment property. For instance, a self-protecting system is ideally healing itself from faults while optimizing and reconfiguring itself to prevent other faults from reoccurring.
 
-These methods are able to detect a specific fault state, however a need of detecting different fault states requires more general methods.  These methods must include monitoring not only sensor data but also actuator failure status.
+Outlined in this document is the proposed process to analyze the effects of faults on the complex system Jaemi Hubo/Hubo2+.  We propose a method of injecting faults in a controlled environment so that we may easily analyze the effects of the faults on the normal operating state.  Different mitigation techniques and their effect on the operating state will be explored and analyzed.
+
+
+%We can never say that no parts will fail however we can know when they do and not have the entire system fail because of one part (reword).
+%On April 27th, 2010: Jaemi Hubo was schedule to be apart of the \textit{Arts and Science Council} annual awards ceremony at the Philadelphia Convention Center.  During the dress rehearsal one of Jaemi's actuators failed ans she fell off of a 1.2 meter stage.
+
+
+
+
+
+
