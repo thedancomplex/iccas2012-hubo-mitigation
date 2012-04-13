@@ -1,9 +1,35 @@
 \section{Methodology}
 
+Our proposed process is divided up into two distinct parts, failure state 
+determination and mitigation.  The determination techniques designed to be 
+wide in scope.  The midigation techniques are tailured towards adult-size
+humanoid robots, specifically the Hubo platforms described in Section~\ref{sec:platform}.
+
+ 
+\subsection{Platform}\label{sec:platform}
+The robots that will be used in these experiments are the adult-size 
+humanoid robots Jaemi Hubo and Hubo2+, see Fig.~\ref{fig:huboSch}.  
+Each Hubo contains 40 degrees of freedom (DOF) and stands at a height of 130cm.
+Each actuator has a high gain internal PID position control loop.  Reference positions are
+commanded at 100hz over a half-duplex 1.0Mbps controlled area network (CAN).
+Each actuator can feed back actual position, current through the actuator, and the actuator status 
+(enabled or disabled).  Other metrics that are fed back are described in 
+Table~\ref{table:states}.  
+
+Currently we have direct access to seven Hubo's in total, six Hubo2+ and one Hubo2 (Jaemi Hubo).
+Two of these robots will be used in these experiments for initial testing.
 
 
-\subsubsection{Mitigation Analysis}
-\label{ssub:mitigation_analysis}
+
+
+\subsection{Failure State Determination}
+\label{sub:Failure_State_Determination}
+
+
+
+
+\subsection{Mitigation Analysis}
+\label{sub:mitigation_analysis}
 The effectiveness of different mitigations has been analyzed on faults injected into two different systems typically used as benchmark applications in the software engineering community, RUBiS\footnote{http://rubis.ow2.org/} and Hadoop\footnote{http://hadoop.apache.org/}. RUBiS is a web application auction site running on the Apache Tomcat\footnote{http://tomcat.apache.org/} web server and serves page requests to hundreds of concurrently simulated clients. Hadoop is a distributed task manager that processes gigabytes of data across multiple nodes. We injected faults into both systems, the virtual machines they are running on, as well as the hosts managing the virtual machines. The faults consumed either processor, memory, disk, database, or network resources in the respective components. We applied generic mitigations that restarted various components, migrated the components to new hosts or virtual machines, or did nothing. The effectiveness of each fault-mitigation pair was analyzed on each system to generate a mapping of faults to mitigations. Using this knowledge, if a fault is later encountered, the best mitigation can be applied with a high chance of success. If a particular mitigation cannot be applied in that instance, then the next best mitigation may be selected, and so forth.
 
 
@@ -29,20 +55,3 @@ The generated fault-mitigation mappings for the two systems offer insight into t
 
 
 
-
-The robot that will be used is the adult-size humanoid robot Jaemi Hubo, see Fig.~\ref{fig:huboSch}.  Jaemi Hubo is a high gain position controlled device.  Each actuator is fed a reference position and is able to feed back the actual position, the current through the actuator, and the actuator status (enabled or disabled).  Each actuator has an over current automatic disable routine.  When this routine is executed the motor control is deactivated but feedback of the actual position is still enabled.  This routine was determined to be the cause of Jaemi Hubo's ankle failure.
-
-\begin{figure}[thpb]
-  \centering
-\includegraphics[width=1.0\columnwidth]{./pix/huboSch.png}
-  \caption{Jaemi Hubo: 130cm tall 45kg (with battery and protective shell) 40 degree of freedom, high gain position controlled adult-size humanoid robot }
-  \label{fig:huboSch}
-\end{figure}
-
-Real time constraints. Difficult to simulate faults with robot.
-
-Collect data from all metrics, and construct convex hull for normal state. If metric is not useful, it will not affect hull (metric is independent of other metrics).
-
-Faults include over torque of actuators, loss of zero-moment-point, over-current disable
-
-Mitigations include: restart actuator, reduce current (disable noncritical actuator?), rebalance (shift position in various ways, move body, make sure feet are on ground, etc.)
