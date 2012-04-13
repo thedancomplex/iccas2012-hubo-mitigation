@@ -1,7 +1,7 @@
 \section{Methodology}
 
 Our proposed process is divided up into two distinct parts, failure state 
-determination and mitigation.  The determination techniques designed to be 
+determination - Section~\ref{sub:FailureStateDetermination}~~ and mitigation - Section~\ref{sub:mitigationanalysis}~~.  The determination techniques designed to be 
 wide in scope.  The midigation techniques are tailured towards adult-size
 humanoid robots, specifically the Hubo platforms described in Section~\ref{sec:platform}.
 
@@ -22,17 +22,13 @@ Two of these robots will be used in these experiments for initial testing.
 
 
 
-\subsection{Failure State Determination}
-\label{sub:Failure_State_Determination}
+\subsection{Failure State Determination}\label{sub:FailureStateDetermination}
 
 
 
 
-\subsection{Mitigation Analysis}
-\label{sub:mitigation_analysis}
+\subsection{Mitigation Analysis}\label{sub:mitigationanalysis}
 The effectiveness of different mitigations has been analyzed on faults injected into two different systems typically used as benchmark applications in the software engineering community, RUBiS\footnote{http://rubis.ow2.org/} and Hadoop\footnote{http://hadoop.apache.org/}. RUBiS is a web application auction site running on the Apache Tomcat\footnote{http://tomcat.apache.org/} web server and serves page requests to hundreds of concurrently simulated clients. Hadoop is a distributed task manager that processes gigabytes of data across multiple nodes. We injected faults into both systems, the virtual machines they are running on, as well as the hosts managing the virtual machines. The faults consumed either processor, memory, disk, database, or network resources in the respective components. We applied generic mitigations that restarted various components, migrated the components to new hosts or virtual machines, or did nothing. The effectiveness of each fault-mitigation pair was analyzed on each system to generate a mapping of faults to mitigations. Using this knowledge, if a fault is later encountered, the best mitigation can be applied with a high chance of success. If a particular mitigation cannot be applied in that instance, then the next best mitigation may be selected, and so forth.
-
-
 
 % When an anomaly occurs, multiple mitigations may be triggered at once. For instance, if a hardware failure is detected on a host, all process should be migrated to another machine and diagnostic utilities should be run on the machine.
 
