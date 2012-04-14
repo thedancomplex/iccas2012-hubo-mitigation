@@ -40,5 +40,9 @@ Generally, when a fault is encountered there are several approaches that can be 
 
 It is important to understand that each of these approaches could have potentially disastrous consequences on a given system. Different systems have different objectives and costs risks associated with it. Similarly, each mitigation has execution costs and risks associated with it. It is possible for a selected mitigation to cause more faults, or increased downtime. If an incorrect mitigation is applied, a cascading effect could quickly emerge.
 
-Typical methods for robot fault mitigation 
+
+\subsection{Humanoid Robot Fault Mitigation}\label{sub:humanoidRobotFaultMitigation}
+
+A typical fault for articulated robots is actuator failure.  A common mitigation method described by Shin, J. et al.\cite{772398} from the Korean Advanced Institute of Science and Technology (KAIST) changes the model of the affected manipulator to one that is under articulated.  This new model allows the robust controller to continue to operate collision free (safe).
+
 

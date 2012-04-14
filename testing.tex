@@ -10,30 +10,23 @@ low level feedback, high level feedback.  A list of the
  Metric   &   Type   &   Status/Measurement \\\hline\hline
 
 
- Over Current 								& Fault 							& Status flag - motor controller has been shutdown due to over current				\\\hline
- Actuator Status							& Status							&	Status flag - motor controller's internal PID control loop is activated 		\\\hline
- Actuator Zeroed 							& Status							& Status flag - motor controller has been zeroed			 												\\\hline
- Actuator Responding 					&	Status							&	Response - Responds if the motor controller is communicating properly 			\\\hline
- Actuator Commanded Position 	&	Low Level						& Reference position given to motor controller.																\\\hline
- Actuator Measured Position 	& Low Level						& Actual position of motor 																										\\\hline
- Actuator Position Error			& High Level					& Position error between commanded and measured position of the actuator			\\\hline
- Actuator Current							& Low Level						& Current used by the given actuator 																					\\\hline
- Orientation (CG)							& Low Level						& Orientation in 3-DOF given by the IMU																				\\\hline
- Force Torque (feet)					& Low Level						& Force-torque measurement in X,Y, and Z directions on each ankle							\\\hline
- Force Torque (hands)					& Low Level						& Force-torque measurement in X,Y, and Z directions on each wrist							\\\hline
- Orientation (feet)						& Low Level						& 2-DOF orientation (X,Y) of each of the feet 																\\\hline
- ZMP Location									& High Level					& Current ZMP location in (X,Y,Z)																							\\\hline
+ Over Current 								& Actuator 							& Status flag - motor controller has been shutdown due to over current				\\\hline
+ Status												& Actuator							&	Status flag - motor controller's internal PID control loop is activated 		\\\hline
+ Zeroed 											& Actuator							& Status flag - motor controller has been zeroed			 												\\\hline
+ Responding 									&	Actuator							&	Response - Responds if the motor controller is communicating properly 			\\\hline
+ Commanded Position 					&	Actuator							& Reference position given to motor controller.																\\\hline
+ Measured Position 						& Actuator							& Actual position of motor 																										\\\hline
+ Position Error								& Actuator							& Position error between commanded and measured position of the actuator			\\\hline
+ Current											& Actuator							& Current used by the given actuator 																					\\\hline
+ Orientation (CG)							& Sensor								& Orientation in 3-DOF given by the IMU																				\\\hline
+ Force Torque (feet)					& Sensor								& Force-torque measurement in X,Y, and Z directions on each ankle							\\\hline
+ Force Torque (hands)					& Sensor								& Force-torque measurement in X,Y, and Z directions on each wrist							\\\hline
+ Orientation (feet)						& Sensor								& 2-DOF orientation (X,Y) of each of the feet 																\\\hline
+ ZMP Location									& Kinematics						& Current ZMP location in (X,Y,Z)																							\\\hline
 \end{tabular}
-\end{center}
+\end{center} 
 \end{table*}
 
-\subsection{Fault Injection}\label{sec:faultInjection}
-Known mechanical, electrical, and communications faults are injected into the Hubo system.  
-All states are recorded during each test.  The system is recorded at a rate of 100hz.  A known
-stable state is held for the first 30 seconds of recording for a baseline.  At 30 seconds
-
-
-Faults will be injected into the system for each 
 
 
 \section{Expected Results}\label{sec:expResults}
