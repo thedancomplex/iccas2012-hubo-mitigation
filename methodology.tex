@@ -16,15 +16,16 @@ Each actuator can feed back actual position, current through the actuator, and t
 (enabled or disabled).  Other metrics that are fed back are described in 
 Table~\ref{table:states}.  
 
+
 Currently we have direct access to seven Hubo's in total, six Hubo2+ and one Hubo2 (Jaemi Hubo).
 Two of these robots will be used in these experiments for initial testing.
 
 
 
 \subsection{Failure State Determination}
-\label{sub:failurestatedetermination}
+\label{sub:FailureStateDetermination}
 To accurately detect when a fault is occurring in the Hubo robots, the Aniketos system requires an understanding of each robot's normal state. This normal state is constructed from a variety of safe routines that exercise the different features of the robots individually and simultaneously. If a fault is triggered during training, then any subsequent time the fault manifests, it will be presumed to be safe. If these routines do not exercise all features of the robots, then it is possible that a mitigation will be triggered when no fault is occurring. To construct the state, Aniketos collects data from all available sensors, treating each set of measurements as a point in $n$-dimensional space. Aniketos uses an online algorithm to construct the enclosing $n$-dimensional convex hull around these points as each each data point arrives. The time needed to classify a single measurement point is dependent on the number of dimensions and the number of points needed to define the hull.
->>>>>>> bd4387b63121e99e2797afe6099c6e3b26c72be1
+
 
 Aniketos determines that a fault is occurring when the current system state is outside of the normal state. To diagnose that a specific is occuring fault hulls must be created for each known possible fault. This fault data is collected in a fashion similar to the normal state, except the fault must be triggered in a controlled environment. Section~\ref{} describes the faults that will be studied.
 
@@ -39,8 +40,11 @@ A naive observer would expect the two systems to have nearly identical fault-mit
 
 The generated fault-mitigation mappings for the two software systems offer insight into their respective natures. On the surface, both software systems operate like typical servers, waiting for requests or tasks, and processing them in a timely fashion. However, the way the requests are handled results in faults manifesting in different ways. Even though a fault may be detected, the obvious mitigation is not always the best. This approach to mitigation analysis, will offer valuable insight into the true effectiveness of mitigations when faults occur in Hubo.
 
+\subsection{Hubo Fault Injection}
+Faults will be injected to the Hubo system in a lab setting.  Each fault will be injected on eight separate trials to ensure statistically significant results.  During each system metrics are be recorded at a rate of 100hz for the entirety of the test.  Table~\ref{table:states} discribes each of the metrics recorded.  Each test will consist of two stages.  The first stage lasts 30 seconds.  In this stage the robot standing or walking (depending on the test) in a stable fault free state.  The fault is injected at 30 seconds.  This marks the beginning of the second stage.  The second stage will last two minutes or 30 seconds after instability has occurred, which ever comes first.
+
 \subsection{Hubo Mitigations}
-As in the software case studies, no single mitigation will correct all faults. The effect of each mitigation on a specific fault should be analyzed based on execution time, effectiveness (time to next fault), and risk of damange to the system.
+As in the software case studies, no single mitigation will correct all faults. The effect of each mitigation on a specific fault should be analyzed based on execution time, effectiveness (time to next fault), and risk of damage to the system.
 
 
 

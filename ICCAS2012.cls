@@ -308,9 +308,9 @@
 \newcounter{subsection}[section]
 \newcounter{subsubsection}[subsection]
 
-\def\thesection{\arabic{section}. \hskip -1em}
-\def\thesubsection{\arabic{section}.\arabic{subsection} \hskip -1em}
-\def\thesubsubsection{\arabic{section}.\arabic{subsection}.\arabic{subsubsection} \hskip -1em}
+\def\thesection{\arabic{section}.}% \hskip 1em}
+\def\thesubsection{\arabic{section}.\arabic{subsection}}% \hskip 1em}
+\def\thesubsubsection{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}% \hskip 1em}
 
 \def\theequation{\arabic{equation}}
 
