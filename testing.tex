@@ -1,15 +1,14 @@
-\subsection{Faults}\label{sec:faults}
-The states that we will be analyzing for the creation of the convex hull 
-for the fault detection mapping fall into four categories, faults, status, 
-low level feedback, high level feedback.  A list of the 
+\subsection{Faults}
+\label{sec:faults}
+The states that we will be analyzing for the creation of the convex hull for
+the fault detection mapping fall into four categories, faults, status, low
+level feedback, high level feedback.  A list of the
 
 \begin{table*}[t]
-\caption{-  Metrics analyzed for convex hull creation}\label{table:states}
+\caption{- Metrics analyzed for convex hull creation}\label{table:states}
 \begin{center}
 \begin{tabular}{|l|c|l|}\hline
  Metric   &   Type   &   Status/Measurement \\\hline\hline
-
-
  Over Current 								& Actuator 							& Status flag - motor controller has been shutdown due to over current				\\\hline
  Status												& Actuator							&	Status flag - motor controller's internal PID control loop is activated 		\\\hline
  Zeroed 											& Actuator							& Status flag - motor controller has been zeroed			 												\\\hline
@@ -24,9 +23,9 @@ low level feedback, high level feedback.  A list of the
  Orientation (feet)						& Sensor								& 2-DOF orientation (X,Y) of each of the feet 																\\\hline
  ZMP Location									& Kinematics						& Current ZMP location in (X,Y,Z)																							\\\hline
 \end{tabular}
-\end{center} 
+\end{center}
 \end{table*}
 
 
-
-\section{Expected Results}\label{sec:expResults}
+\section{Expected Results}
+\label{sec:expResults}

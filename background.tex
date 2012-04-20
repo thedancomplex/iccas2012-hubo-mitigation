@@ -1,48 +1,153 @@
 \section{Background}
 \label{sec:background}
-
-The techniques proposed in this work borrows from the bleeding edge work in autonomic software engineering and computing.  The heart of autonomic computing is anomaly detection, diagnosis, and mitigation. Autonomic systems perform 4 general tasks in a continuous closed loop: monitor components with the help of sensors, interpret the monitored data, create a repair plan for system adaptation, and execute this plan through effectors on the monitored system and its environment. This is the MAPE (Monitor, Analyze, Plan, Execute) loop \cite{1160055}. Fig.~\ref{fig:mape} illustrates how an autonomic element uses this loop to manage a component.
+The techniques proposed in this work borrows from the bleeding edge work in
+autonomic software engineering and computing.  The heart of autonomic computing
+is anomaly detection, diagnosis, and mitigation. Autonomic systems perform 4
+general tasks in a continuous closed loop: monitor components with the help of
+sensors, interpret the monitored data, create a repair plan for system
+adaptation, and execute this plan through effectors on the monitored system and
+its environment. This is the MAPE (Monitor, Analyze, Plan, Execute) loop
+\cite{1160055}. Fig.~\ref{fig:mape} illustrates how an autonomic element uses
+this loop to manage a component.
 
 \begin{figure}[tb]
   \centering
   \includegraphics[width=\columnwidth]{images/mape}
-  \caption{-  An autonomic element uses the MAPE control loop to monitor a component, analyze the its status with respect to a policy, plan how to meet the policy requirements, and execute a set of actions to do so.}
+  \caption{- An autonomic element uses the MAPE control loop to monitor a
+		component, analyze the its status with respect to a policy, plan how to
+		meet the policy requirements, and execute a set of actions to do so.}
 	\label{fig:mape}
 \end{figure}
 
-Autonomic approaches can be applied to many different types of systems, particularly when focusing on fault detection and mitigation. self-healing opearting systems \cite{DBLP:journals/ibmsj/AppavooHSWSKAEGGMORSX03,4351383} protect against bit-flips and other transient hardware faults, and are able to hot-swap components or firmware during runtime. At the application level, it is possible to monitor the architecture requirements of a system and detect when an architectural property (e.g. required connection bandwidth) falls outside of an acceptable threshold \cite{Garlan2004}. If an invariant is violated, it executes a strategy specifically designed to correct the violated invariant. The strategies can reinitialize components and reconfigure the system to recover from the violation and attempt to prevent the violation from reoccurring. However, the applied strategies are \emph{ad hoc} solutions, requiring developers and maintainers to understand and preempt the shortcomings of the system, in much the same way they would manually debug and repair the system.
+Autonomic approaches can be applied to many different types of systems,
+particularly when focusing on fault detection and mitigation. self-healing
+opearting systems \cite{DBLP:journals/ibmsj/AppavooHSWSKAEGGMORSX03,4351383}
+protect against bit-flips and other transient hardware faults, and are able to
+hot-swap components or firmware during runtime. At the application level, it is
+possible to monitor the architecture requirements of a system and detect when
+an architectural property (e.g. required connection bandwidth) falls outside of
+an acceptable threshold \cite{Garlan2004}. If an invariant is violated, it
+executes a strategy specifically designed to correct the violated
+invariant. The strategies can reinitialize components and reconfigure the
+system to recover from the violation and attempt to prevent the violation from
+reoccurring. However, the applied strategies are \emph{ad hoc} solutions,
+requiring developers and maintainers to understand and preempt the shortcomings
+of the system, in much the same way they would manually debug and repair the
+system.
 
 \subsection{Fault Detection and Diagnosis}
 \label{sub:fault_detection}
+Previous approaches to the detection of software faults fall into two
+categories, signature-based and
+anomaly-based~\cite{al-nashif2008}. Signature-based methods detect faults by
+matching measurements to known fault signatures. These techniques are used in
+static fault-checking software such as the commercial antivirus software
+McAfee~\cite{Mcafee} and Symantec~\cite{symantec}, as well as network intrusion
+detection systems such as Snort~\cite{Roesch1999} and
+Netstat~\cite{Vigna1999}. These techniques can also be used to detect recurring
+runtime faults~\cite{Brodie2005}.
 
-Previous approaches to the detection of software faults fall into two categories, signature-based and anomaly-based~\cite{al-nashif2008}. Signature-based methods detect faults by matching measurements to known fault signatures. These techniques are used in static fault-checking software such as the commercial antivirus software McAfee~\cite{Mcafee} and Symantec~\cite{symantec}, as well as network intrusion detection systems such as Snort~\cite{Roesch1999}  and Netstat~\cite{Vigna1999}. These techniques can also be used to detect recurring runtime faults~\cite{Brodie2005}.
+Typically, anomaly-detection techniques begin by collecting sensor measurements
+of a normally behaving system. Then, they construct a representation of the
+monitored system and compare any future measurements against that
+representation. A common approach is to use metric correlations to quantify a
+monitored system. During detection, if the correlations between metrics becomes
+significantly different from the learned correlations, the system is classified
+to be in a faulty state~\cite{zhen2006,zhao2009,Cohen2004,Jiang2009}.
 
-Typically, anomaly-detection techniques begin by collecting sensor measurements of a normally behaving system. Then, they construct a representation of the monitored system and compare any future measurements against that representation. A common approach is to use metric correlations to quantify a monitored system. During detection, if the correlations between metrics becomes significantly different from the learned correlations, the system is classified to be in a faulty state~\cite{zhen2006,zhao2009,Cohen2004,Jiang2009}.
+Once a fault is detected, it must be correctly diagnosed. Bayesian Network
+classifiers have been applied in several previous approaches to diagnosis
+using. Ghanbari et al. propose an approach to anomaly diagnosis based on
+Bayesian networks that are wholly or partially specified by a human user
+\cite{Ghanbari2008}. Tree augmented naive bayesian classifiers are the basis
+for software failure diagnosis in work by Cohen et al.~\cite{Cohen2004}. Zhang
+et al. use ensembles of tree augmented naive Bayesian classifiers to diagnose
+faults.~\cite{Zhang2005}. Other classification techniques have been used to
+diagnose software faults. Chen et al.  offer an approach to the diagnosis of
+failures in large-scale Internet service systems using decision trees
+\cite{Chen2004}.  Duan et al.~\cite{Duan} propose an approach to diagnosis of
+software failures that uses active learning to minimize the number of data
+points that a human administrator must label.
 
-Once a fault is detected, it must be correctly diagnosed. Bayesian Network classifiers have been applied in several previous approaches to diagnosis using. Ghanbari et al. propose an approach to anomaly diagnosis based on Bayesian networks that are wholly or partially specified by a human user \cite{Ghanbari2008}. Tree augmented naive bayesian classifiers are the basis for software failure diagnosis in work by  Cohen et al.~\cite{Cohen2004}. Zhang et al. use ensembles of tree augmented naive Bayesian classifiers to diagnose faults.~\cite{Zhang2005}. Other classification techniques have been used to diagnose software faults. Chen et al.  offer an approach to the diagnosis of failures in large-scale Internet service systems using decision trees \cite{Chen2004}.  Duan et al.~\cite{Duan} propose an approach to diagnosis of software failures that uses active learning to minimize the number of data points that a human administrator must label.
-
-In previous work it has been demonstrated that computational geometry can be used to effectively detect system faults at runtime\cite{stehle2010,shevertalov2010using}. The approach, introduced in the work as Aniketos, is split into a training phase, and a monitoring phase. During the training phase, the monitored system executes its normal behavior and runtime data is periodically collected from sensors monitoring the application, the operating system, and the hardware. Using these measurements, we can construct an $n$-dimensional convex hull whose enclosing space represents the normal execution of the monitored application, where $n$ is the number of distinct metrics used. Figure~\ref{fig:class_hulls} shows an example of a 2-dimensional convex hull.
+In previous work it has been demonstrated that computational geometry can be
+used to effectively detect system faults at
+runtime\cite{stehle2010,shevertalov2010using}. The approach, introduced in the
+work as Aniketos, is split into a training phase, and a monitoring
+phase. During the training phase, the monitored system executes its normal
+behavior and runtime data is periodically collected from sensors monitoring the
+application, the operating system, and the hardware. Using these measurements,
+we can construct an $n$-dimensional convex hull whose enclosing space
+represents the normal execution of the monitored application, where $n$ is the
+number of distinct metrics used. Figure~\ref{fig:class_hulls} shows an example
+of a 2-dimensional convex hull.
 
 \begin{figure}[tb]
   \centering
   \includegraphics[width=\columnwidth]{images/class_hulls}
-  \caption{-  Building convex hulls for the diagnosis of faults (a) sample points from normal operation and two fault classes (b) Points inside of the convex hulls are diagnosed as normal or one of the fault classes. Points outside of all hulls are diagnosed as unknown faults.}
+  \caption{- Building convex hulls for the diagnosis of faults (a) sample
+		points from normal operation and two fault classes (b) Points inside of the
+		convex hulls are diagnosed as normal or one of the fault classes. Points
+		outside of all hulls are diagnosed as unknown faults.}
   \label{fig:class_hulls}
 \end{figure}
 
-During the monitoring phase, if a measurement point falls outside of this enclosure, a fault is likely to have occurred. To properly mitigate the fault, the problem must be diagnosed \cite{6100108} and a viable mitigation selected. If measurement data is available for a set of known faults, then it is possible to construct hulls for individual faults, or classes of faults. During the monitoring phase, if a measurement falls within one of these fault hulls we can determine which fault is likely occurring and apply a mitigation.This approach is also capable of recognizing that an occurring fault is not a type of fault that it has been trained to recognize. Typical classification techniques, such as naive Bayes and voting feature intervals\cite{Demiroz1997}, require that every sample be assigned a class from a finite list of possible classes, which can cause drastic consequences if an incorrect mitigation is selected. Our approach allows Aniketos to recognize that a fault has occurred, but does not force Aniketos to label the fault as one of the faults that it has been trained to recognize. One of the most important features of a fault detection and diagnosis system is the ability to handle new faults.
+During the monitoring phase, if a measurement point falls outside of this
+enclosure, a fault is likely to have occurred. To properly mitigate the fault,
+the problem must be diagnosed \cite{6100108} and a viable mitigation
+selected. If measurement data is available for a set of known faults, then it
+is possible to construct hulls for individual faults, or classes of
+faults. During the monitoring phase, if a measurement falls within one of these
+fault hulls we can determine which fault is likely occurring and apply a
+mitigation.This approach is also capable of recognizing that an occurring fault
+is not a type of fault that it has been trained to recognize. Typical
+classification techniques, such as naive Bayes and voting feature
+intervals\cite{Demiroz1997}, require that every sample be assigned a class from
+a finite list of possible classes, which can cause drastic consequences if an
+incorrect mitigation is selected. Our approach allows Aniketos to recognize
+that a fault has occurred, but does not force Aniketos to label the fault as
+one of the faults that it has been trained to recognize. One of the most
+important features of a fault detection and diagnosis system is the ability to
+handle new faults.
 
 \subsection{Fault Mitigation}
 \label{sub:fault_mitigation}
-Once a fault is detected and diagnosed a mitigation can be applied in an attempt to bring the system back to a normal operating state. To select the most appropriate mitigation to execute, mitigations must be evaluated based on their performance cost, impact on the system, reliability, and how they affect other mitigations locally as well as in the global environment. Given a set of faults and a set of mitigations, it is possible to intuitively and empiracally determine the best possible mitigation for a given fault. However, it is impossible to plan for all possible fault scenarios, limiting the effectiveness of mitigation selection.
+Once a fault is detected and diagnosed a mitigation can be applied in an
+attempt to bring the system back to a normal operating state. To select the
+most appropriate mitigation to execute, mitigations must be evaluated based on
+their performance cost, impact on the system, reliability, and how they affect
+other mitigations locally as well as in the global environment. Given a set of
+faults and a set of mitigations, it is possible to intuitively and empiracally
+determine the best possible mitigation for a given fault. However, it is
+impossible to plan for all possible fault scenarios, limiting the effectiveness
+of mitigation selection.
 
-Generally, when a fault is encountered there are several approaches that can be taken. Reinitialization brings the whole system or part of the system, to its initial state when a fault is detected.If a fault can be localized, it is possible to progressively microreboot larger portions of the system until the problem is resolved, starting with the most localized component \cite{1251257}. A generalization of reinitialization, known as rollback, restores the system to a previous checkpoint, undoing any environment changes that may have been made \cite{1095833}. While this approach may not always be feasible, in some cases, simply undoing the failing operation may be sufficient. Often times, the system needs to be reconfigured to adapt to changes in the system's environment. This can be done by tuning component parameters, scaling components, replacing components, or removing components entirely. Finally, in certain cases, it may be best to just accept the fault and continue without mitigation. 
+Generally, when a fault is encountered there are several approaches that can be
+taken. Reinitialization brings the whole system or part of the system, to its
+initial state when a fault is detected.If a fault can be localized, it is
+possible to progressively microreboot larger portions of the system until the
+problem is resolved, starting with the most localized component
+\cite{1251257}. A generalization of reinitialization, known as rollback,
+restores the system to a previous checkpoint, undoing any environment changes
+that may have been made \cite{1095833}. While this approach may not always be
+feasible, in some cases, simply undoing the failing operation may be
+sufficient. Often times, the system needs to be reconfigured to adapt to
+changes in the system's environment. This can be done by tuning component
+parameters, scaling components, replacing components, or removing components
+entirely. Finally, in certain cases, it may be best to just accept the fault
+and continue without mitigation.
 
-It is important to understand that each of these approaches could have potentially disastrous consequences on a given system. Different systems have different objectives and costs risks associated with it. Similarly, each mitigation has execution costs and risks associated with it. It is possible for a selected mitigation to cause more faults, or increased downtime. If an incorrect mitigation is applied, a cascading effect could quickly emerge.
+It is important to understand that each of these approaches could have
+potentially disastrous consequences on a given system. Different systems have
+different objectives and costs risks associated with it. Similarly, each
+mitigation has execution costs and risks associated with it. It is possible for
+a selected mitigation to cause more faults, or increased downtime. If an
+incorrect mitigation is applied, a cascading effect could quickly emerge.
 
 
-\subsection{Humanoid Robot Fault Mitigation}\label{sub:humanoidRobotFaultMitigation}
-
-A typical fault for articulated robots is actuator failure.  A common mitigation method described by Shin, J. et al.\cite{772398} from the Korean Advanced Institute of Science and Technology (KAIST) changes the model of the affected manipulator to one that is under articulated.  This new model allows the robust controller to continue to operate collision free (safe).
-
-
+\subsection{Humanoid Robot Fault Mitigation}
+\label{sub:humanoidRobotFaultMitigation}
+A typical fault for articulated robots is actuator failure.  A common
+mitigation method described by Shin, J. et al.\cite{772398} from the Korean
+Advanced Institute of Science and Technology (KAIST) changes the model of the
+affected manipulator to one that is under articulated.  This new model allows
+the robust controller to continue to operate collision free (safe).
