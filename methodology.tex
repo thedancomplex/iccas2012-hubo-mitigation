@@ -7,6 +7,22 @@ designed to be wide in scope.  The mitigation techniques are tailored towards
 adult-size humanoid robots, specifically the Hubo platforms described in
 Section~\ref{sub:platform}.
 
+\begin{table*}[t]
+\caption{- Actuator metrics analyzed for convex hull creation}\label{table:Astates}
+\begin{center}
+\begin{tabular}{|l|c|l|}\hline
+ Metric   &   Type   &   Status/Measurement \\\hline\hline
+ Over Current 								& Actuator 							& Status flag - motor controller has been shutdown due to over current				\\\hline
+ Status												& Actuator							&	Status flag - motor controller's internal PID control loop is activated 		\\\hline
+ Zeroed 											& Actuator							& Status flag - motor controller has been zeroed			 												\\\hline
+ Responding 									&	Actuator							&	Response - Responds if the motor controller is communicating properly 			\\\hline
+ Commanded Position 					&	Actuator							& Reference position given to motor controller.																\\\hline
+ Measured Position 						& Actuator							& Actual position of motor 																										\\\hline
+ Position Error								& Actuator							& Position error between commanded and measured position of the actuator			\\\hline
+ Current											& Actuator							& Current used by the given actuator 																					\\\hline
+\end{tabular}
+\end{center}
+\end{table*}
 
 \subsection{Platform}
 \label{sub:platform}
@@ -17,7 +33,7 @@ a high gain internal PID position control loop.  Reference positions are
 commanded at 100hz over a half-duplex 1.0Mbps controlled area network (CAN).
 Each actuator can feed back actual position, current through the actuator, and
 the actuator status (enabled or disabled).  Other metrics that are fed back are
-described in Table~\ref{table:states}.
+described in Table~\ref{table:Astates} and Table~\ref{table:Sstates}.
 
 Currently we have direct access to seven Hubo's in total, six Hubo2+ and one
 Hubo2 (Jaemi Hubo).  Two of these robots will be used in these experiments for
@@ -45,19 +61,20 @@ Aniketos determines that a fault is occurring when the current system state is
 outside of the normal state. To diagnose that a specific is occurring fault
 hulls must be created for each known possible fault. This fault data is
 collected in a fashion similar to the normal state, except the fault must be
-triggered in a controlled environment. Section~\ref{sec:faults} describes the
-faults that will be studied and Section~\ref{sec:faultInjection} describes how
+triggered in a controlled environment. Section~\ref{sec:faultInjection} describes the
+faults that will be studied and how
 these faults are injected into the system in a lab setting.
 
 Once all of the hulls are constructed, the monitoring phase will analyze each
 measurement point and determine whether the robot is operating normally. If it
 is not, Aniketos will attempt to determine if a known fault is occurring, or if
 an unknown fault is occurring.  Typically, it takes less than 100ms to classify
-a point using 25 dimensions and a hull that is constructed from 10000 points.
+a point using 25 dimensions and a hull that is constructed from 10000 points using a single threaded 2.4Ghz x86 computer.
 To better meet the real-time data rate, algorithms may be used to reduce the
 number of points, and more efficient algorithm implements can be used to reduce
 the processing time. If a fault is detected, an appropriate mitigation should
 be selected and applied.
+
 
 
 \subsection{Mitigation Analysis}
@@ -107,12 +124,26 @@ detected, the obvious mitigation is not always the best. This approach to
 mitigation analysis, will offer valuable insight into the true effectiveness of
 mitigations when faults occur in Hubo.
 
-\subsection{Hubo Fault Injection}
+\begin{table*}[t]
+\caption{- Sensor and kinematic metrics analyzed for convex hull creation}\label{table:Sstates}
+\begin{center}
+\begin{tabular}{|l|c|l|}\hline
+ Metric   &   Type   &   Status/Measurement \\\hline\hline
+ Orientation (CG)							& Sensor								& Orientation in 3-DOF given by the IMU																				\\\hline
+ Force Torque (feet)					& Sensor								& Force-torque measurement in X,Y, and Z directions on each ankle							\\\hline
+ Force Torque (hands)					& Sensor								& Force-torque measurement in X,Y, and Z directions on each wrist							\\\hline
+ Orientation (feet)						& Sensor								& 2-DOF orientation (X,Y) of each of the feet 																\\\hline
+ ZMP Location									& Kinematics						& Current ZMP location in (X,Y,Z)																							\\\hline
+\end{tabular}
+\end{center}
+\end{table*}
+
+\subsection{Fault Injection}
 \label{sec:faultInjection}
 Faults will be injected to the Hubo system in a lab setting.  Each fault will
 be injected on eight separate trials to ensure statistically significant
 results.  During each test system metrics are be recorded at a rate of 100hz
-for the entirety of the test.  Table~\ref{table:states} describes each of the
+for the entirety of the test.  Table~\ref{table:Astates} and Table~\ref{table:Sstates} describes each of the
 metrics recorded.  Each test will consist of two stages.  The first stage lasts
 30 seconds.  In this stage the robot is standing or walking (depending on the
 test) in a stable fault and failure free state.  The given fault is injected at
@@ -120,9 +151,35 @@ test) in a stable fault and failure free state.  The given fault is injected at
 will last two minutes or 30 seconds after instability has occurred, which ever
 comes first.
 
+The faults that will be injected are \textit{actuator failure} and \textit{ZMP loss}.  
+Actuator failures will be created by: 
+
+\begin{itemize}
+\item Removing power to actuator during operation (Actuator will no longer respond)
+\item Removing power to motor during operation (Actuator will respond but the motor has no power)
+\item Lowering the over current threshold within the actuator causing an over current shutdown.
+\end{itemize}
+
+\noindent ZMP loss will be tested by:
+\begin{itemize}
+\item Known impulse (push) applied to shoulder in the x and y directions.
+\item Step onto un-even terrain.
+\item Sudden ground shift in x and y direction (treadmill turned on then off)
+\end{itemize}
+
+To ensure no physical harm to the robot during testing, All test will be preformed 
+in the full-scale safe testing environment designed for experiments with Jaemi Hubo 
+created using DASL’s Systems Integrated Sensor Test Rig (SISTR)\cite{5686325}.
+
+A $n$-dimensional convex hull for the normal operating state and each of the injected fault states
+will be created using the above data using the methods described in Section~\ref{sub:FailureStateDetermination}.
+
+
+
 \subsection{Hubo Mitigations}
 \label{sub:hubomitigations}
 As in the software case studies, no single mitigation will correct all
 faults. The effect of each mitigation on a specific fault should be analyzed
 based on execution time, effectiveness (time to next fault), and risk of damage
 to the system.
+

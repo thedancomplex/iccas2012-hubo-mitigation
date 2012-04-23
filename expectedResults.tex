@@ -1,0 +1,8 @@
+\section{Expected Results}
+\label{sec:expResults}
+
+It is expected that the recorded metrics will converge and give us a well defined convex hull for normal operating state.  Failure states such as ZMP loss or  actuator over current is also expected to create a well defined hull due to it's tight correlation with the kinematics and sensor data.  Failures that are not tightly correlated other metrics, such as actuator zero or actuator status, are not expected to form a well defined hull.  Similar to the software system it is expected that the mitigation methods will very from platform to platform despite having the same faults present.
+
+\section{Conclusion}
+Through the failure at the Philadelphia Convention Center it has been shown that there is a need for fault state detection and mitigation.
+It has been shown that Aniketos system is capable of creating an $n$-dimensional convex hull describing proper running states and failure states on software system.  A plan has been described to apply Aniketos to a physical platform which included injecting faults into the physical system and creating the convex hull from the recorded sensor and state data.  The expected results are described in Section~\ref{sec:expResults} and are based on the results from the software testing.
