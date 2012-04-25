@@ -53,9 +53,22 @@ fault is occurring. To construct the state, Aniketos collects data from all
 available sensors, treating each set of measurements as a point in
 $n$-dimensional space. Aniketos uses an online algorithm to construct the
 enclosing $n$-dimensional convex hull around these points as each each data
-point arrives. The time needed to classify a single measurement point is
-dependent on the number of dimensions and the number of points needed to define
-the hull.
+point arrives.
+
+During the monitoring phase, a new measurement point $x$ is a member of the
+convex set $X = \{x_1, \dots, x_k \}$ if
+
+\begin{equation}
+	x = \sum_{i=1}^{k} \lambda_ix_i\\
+	\lambda_i \geq 0\\
+	\sum_{i=1}^{k} \lambda_i = 1
+\end{equation}
+
+This can be solved using a nonnegative linear least squares
+algorithm\cite{Lawson1974}. If a feasible solution exists, then the point is
+contained in the convex set. The time needed to classify a single measurement
+point is dependent on the number of dimensions and the number of points needed
+to define the hull.
 
 Aniketos determines that a fault is occurring when the current system state is
 outside of the normal state. To diagnose that a specific is occurring fault
@@ -151,8 +164,8 @@ test) in a stable fault and failure free state.  The given fault is injected at
 will last two minutes or 30 seconds after instability has occurred, which ever
 comes first.
 
-The faults that will be injected are \textit{actuator failure} and \textit{ZMP loss}.  
-Actuator failures will be created by: 
+The faults that will be injected are \textit{actuator failure} and \textit{ZMP loss}.
+Actuator failures will be created by:
 
 \begin{itemize}
 \item Removing power to actuator during operation (Actuator will no longer respond)
@@ -167,8 +180,8 @@ Actuator failures will be created by:
 \item Sudden ground shift in x and y direction (treadmill turned on then off)
 \end{itemize}
 
-To ensure no physical harm to the robot during testing, All test will be preformed 
-in the full-scale safe testing environment designed for experiments with Jaemi Hubo 
+To ensure no physical harm to the robot during testing, All test will be preformed
+in the full-scale safe testing environment designed for experiments with Jaemi Hubo
 created using DASL’s Systems Integrated Sensor Test Rig (SISTR)\cite{5686325}.
 
 A $n$-dimensional convex hull for the normal operating state and each of the injected fault states
@@ -182,4 +195,3 @@ As in the software case studies, no single mitigation will correct all
 faults. The effect of each mitigation on a specific fault should be analyzed
 based on execution time, effectiveness (time to next fault), and risk of damage
 to the system.
-
