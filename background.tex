@@ -1,6 +1,6 @@
 \section{Background}
 \label{sec:background}
-The techniques proposed in this work borrows from the bleeding edge work in
+The technique proposed in this work borrows from the bleeding edge work in
 autonomic software engineering and computing.  The heart of autonomic computing
 is anomaly detection, diagnosis, and mitigation. Autonomic systems perform 4
 general tasks in a continuous closed loop: monitor components with the help of
@@ -125,14 +125,14 @@ attempt to bring the system back to a normal operating state. To select the
 most appropriate mitigation to execute, mitigations must be evaluated based on
 their performance cost, impact on the system, reliability, and how they affect
 other mitigations locally as well as in the global environment. Given a set of
-faults and a set of mitigations, it is possible to intuitively and empiracally
+faults and a set of mitigations, it is possible to intuitively and empirically
 determine the best possible mitigation for a given fault. However, it is
 impossible to plan for all possible fault scenarios, limiting the effectiveness
 of mitigation selection.
 
 Generally, when a fault is encountered there are several approaches that can be
-taken. Reinitialization brings the whole system or part of the system, to its
-initial state when a fault is detected.If a fault can be localized, it is
+taken. Reinitialization brings the whole system, or part of the system, to its
+initial state when a fault is detected.  If a fault can be localized, it is
 possible to progressively microreboot larger portions of the system until the
 problem is resolved, starting with the most localized component
 \cite{1251257}. A generalization of reinitialization, known as rollback,

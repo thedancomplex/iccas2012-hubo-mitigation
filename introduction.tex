@@ -5,8 +5,8 @@ robot handlers Daniel M. Lofaro and Robert Ellenberg were preparing the
 adult-size humanoid robot Jaemi Hubo\footnote{Jaemi Hubo Home Page:
 	http://dasl.mem.drexel.edu/HUBO} at an outreach demonstration for the
 \textit{Arts \& Science Council} of Philadelphia.  During the dress rehearsal
-one of Jaemi's actuators failed during a demonstration of active balancing and
-she fell off of a 4 foot high stage.  The results of the impact can be found in
+one of Jaemi's actuators failed while preforming an active balancing demonstration.  This resulted in
+Jaemi Hubo falling off the 4 foot high stage.  The results of the impact can be found in
 Fig.~\ref{fig:fall} and on YouTube\footnote{Jaemi Hubo Fall:
 	http://www.youtube.com/watch?v=DF8zAM4FLB4}\label{link:fall}.  This annual
 event was a high profile fund raiser for the arts and science programs
@@ -25,8 +25,8 @@ All electro-mechanical systems have an inherent mean-time to failure.  Even
 with good maintenance these systems can fail without warning.  This work
 proposes ways to \textit{detect} when entering a failure state and ways of
 \textit{mitigating} such failures.  A failure state is defined as the operating
-conditions where the robot is unable safely preform tasks, this includes but is
-not limited to actuator faults and failures, loss of balance, power loss, etc.
+conditions where the robot is unable to safely preform tasks.  This includes, but is
+not limited to, actuator faults and failures, loss of balance, power loss, etc.
 Faults are defined as the failure (intermittent or perpetual) in a single part
 of the robot.  A single fault does not mean a system failure in all cases.  The
 adult-size humanoid robots Hubo2+ and Jaemi Hubo (KHR-4) are the primary test
@@ -76,17 +76,18 @@ In this work Section~\ref{sub:FailureStateDetermination} outlines the authors
 plan to use their bleeding-edge software engineering failure state detection
 techniques on the complex electro-mechanical system Jaemi Hubo.
 Section~\ref{sec:faultInjection} describes the system faults used to determine failure
-states and how these faults are injected into the system in a controlled environment.  Finlay
-Section\ref{sub:mitigationanalysis} shows how to define proper mitigation
+states and how these faults are injected into the system in a controlled environment.  Finally
+Section~\ref{sub:mitigationanalysis} shows how to define proper mitigation
 techniques for a give failure state and Section~\ref{sec:expResults} describes
 our expected results.
 
-%\begin{figure}[thpb]
-%  \centering
-%\includegraphics[width=1.0\columnwidth]{./pix/jaemiFix.png}
-%  \caption{Jaemi Hubo 50 days after the fall at the the Philadelphia Convention Center.  
-%  Jaemi Hubo is once again in full operational order.  She was fixed by the students at 
-%  the Drexel Autonomous Systems Lab (DASL).
-%	}
-%  \label{fig:huboFix}
-%\end{figure}
+\begin{figure}[thpb]
+  \centering
+\includegraphics[width=0.9\columnwidth]{./pix/jaemiFix3.png}
+  \caption{Jaemi Hubo 50 days after the fall at the Philadelphia Convention Center.  
+  Jaemi Hubo is once again in full operational order.  She was fixed solely by the students at 
+  the Drexel Autonomous Systems Lab (DASL).  This demonstrates the successful transfer of tribal knowledge 
+  of the Hubo platform from the Hubo Lab at KAIST to the Drexel Autonomous Systems Lab at Drexel University.
+	}
+  \label{fig:huboFix}
+\end{figure}

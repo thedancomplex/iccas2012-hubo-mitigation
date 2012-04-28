@@ -37,7 +37,9 @@ described in Table~\ref{table:Astates} and Table~\ref{table:Sstates}.
 
 Currently we have direct access to seven Hubo's in total, six Hubo2+ and one
 Hubo2 (Jaemi Hubo).  Two of these robots will be used in these experiments for
-initial testing.
+initial testing.  Access to this common platform (Hubo) allows us to verify results
+with minimal mechatronic differences.  This is the driving goal behind the NSF-MIR2 
+(Grant Number CNS-0960061) through which the Hubo platforms were procured.
 
 
 \subsection{Failure State Determination}
@@ -99,52 +101,6 @@ be selected and applied.
 
 
 
-\subsection{Mitigation Analysis}
-\label{sub:mitigationanalysis}
-The effectiveness of different mitigations has been analyzed on faults injected
-into two different software systems typically used as benchmark applications in
-the software engineering community, RUBiS\footnote{http://rubis.ow2.org/} and
-Hadoop\footnote{http://hadoop.apache.org/}. RUBiS is a web application auction
-site running on the Apache Tomcat\footnote{http://tomcat.apache.org/} web
-server and serves page requests to hundreds of concurrently simulated
-clients. Hadoop is a distributed task manager that processes gigabytes of data
-across multiple nodes. We injected faults into both systems, the virtual
-machines they are running on, as well as the hosts managing the virtual
-machines. The faults consumed either processor, memory, disk, database, or
-network resources in the respective components. We applied generic mitigations
-that restarted various components, migrated the components to new hosts or
-virtual machines, or did nothing. The effectiveness of each fault-mitigation
-pair was analyzed on each system to generate a mapping of faults to
-mitigations. Using this knowledge, if a fault is later encountered, the best
-mitigation can be applied with a high chance of success. If a particular
-mitigation cannot be applied in that instance, then the next best mitigation
-may be selected, and so forth.
-
-A naive observer would expect the two systems to have nearly identical
-fault-mitigation mappings. However, in our testing on software based systems
-the generated mappings varied greatly in the effectiveness of the mitigations
-on a particular fault.  RUBiS is a typical web application that receives
-requests from clients and processes results returned from a database. Little
-processing is being done by RUBiS or its host machine, so even though a
-processor intensive fault may be using up many cycles in the process or the
-host, there is no noticeable effect on the request processing rate. As a
-result, any mitigation applied would result in more down time than if no
-mitigation were to be applied. Unlike RUBiS, Hadoop is much more processor
-intensive. Any host level fault that is slowing down the system will adversely
-affect the completion time for the task. Another major difference is that
-RUBiS, like many other request driven systems, can easily be restarted to
-temporarily address fault symptoms, while restarting Hadoop typically means
-losing already processed results.  We expect similar results when applying this
-method to the complex electro-mechanical platforms Jaemi Hubo/Hubo2+.
-
-The generated fault-mitigation mappings for the latter two software systems
-offer insight into their respective natures. On the surface, both software
-systems operate like typical servers, waiting for requests or tasks, and
-processing them in a timely fashion. However, the way the requests are handled
-results in faults manifesting in different ways. Even though a fault may be
-detected, the obvious mitigation is not always the best. This approach to
-mitigation analysis, will offer valuable insight into the true effectiveness of
-mitigations when faults occur in Hubo.
 
 \begin{table*}[t]
 \caption{- Sensor and kinematic metrics analyzed for convex hull creation}\label{table:Sstates}
@@ -195,6 +151,53 @@ created using DASL’s Systems Integrated Sensor Test Rig (SISTR)\cite{5686325}.
 
 A $n$-dimensional convex hull for the normal operating state and each of the injected fault states
 will be created using the above data using the methods described in Section~\ref{sub:FailureStateDetermination}.
+
+\subsection{Mitigation Analysis}
+\label{sub:mitigationanalysis}
+The effectiveness of different mitigations has been analyzed on faults injected
+into two different software systems typically used as benchmark applications in
+the software engineering community, RUBiS\footnote{http://rubis.ow2.org/} and
+Hadoop\footnote{http://hadoop.apache.org/}. RUBiS is a web application auction
+site running on the Apache Tomcat\footnote{http://tomcat.apache.org/} web
+server and serves page requests to hundreds of concurrently simulated
+clients. Hadoop is a distributed task manager that processes gigabytes of data
+across multiple nodes. We injected faults into both systems, the virtual
+machines they are running on, as well as the hosts managing the virtual
+machines. The faults consumed either processor, memory, disk, database, or
+network resources in the respective components. We applied generic mitigations
+that restarted various components, migrated the components to new hosts or
+virtual machines, or did nothing. The effectiveness of each fault-mitigation
+pair was analyzed on each system to generate a mapping of faults to
+mitigations. Using this knowledge, if a fault is later encountered, the best
+mitigation can be applied with a high chance of success. If a particular
+mitigation cannot be applied in that instance, then the next best mitigation
+may be selected, and so forth.
+
+A naive observer would expect the two systems to have nearly identical
+fault-mitigation mappings. However, in our testing on software based systems
+the generated mappings varied greatly in the effectiveness of the mitigations
+on a particular fault.  RUBiS is a typical web application that receives
+requests from clients and processes results returned from a database. Little
+processing is being done by RUBiS or its host machine, so even though a
+processor intensive fault may be using up many cycles in the process or the
+host, there is no noticeable effect on the request processing rate. As a
+result, any mitigation applied would result in more down time than if no
+mitigation were to be applied. Unlike RUBiS, Hadoop is much more processor
+intensive. Any host level fault that is slowing down the system will adversely
+affect the completion time for the task. Another major difference is that
+RUBiS, like many other request driven systems, can easily be restarted to
+temporarily address fault symptoms, while restarting Hadoop typically means
+losing already processed results.  We expect similar results when applying this
+method to the complex electro-mechanical platforms Jaemi Hubo/Hubo2+.
+
+The generated fault-mitigation mappings for the latter two software systems
+offer insight into their respective natures. On the surface, both software
+systems operate like typical servers, waiting for requests or tasks, and
+processing them in a timely fashion. However, the way the requests are handled
+results in faults manifesting in different ways. Even though a fault may be
+detected, the obvious mitigation is not always the best. This approach to
+mitigation analysis, will offer valuable insight into the true effectiveness of
+mitigations when faults occur in Hubo.
 
 
 
